@@ -1,0 +1,43 @@
+name: Check SideQuest EasyInstalle Releases
+
+on:
+  schedule:
+    - cron: 0 0 * * *
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Previous Release Info
+        id: download-artifact
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          name: easyinstaller-release-info
+          workflow_conclusion: success
+          workflow: publish.yml
+          if_no_artifact_found: warn
+
+      - name: Get Latest Release
+        id: get_release
+        run: |
+          # Fetch release information and extract the release tag
+          RELEASE_TAG=$(curl -s https://api.github.com/repos/SideQuestVR/EasyInstallerReleases/releases /latest | jq -r '.tag_name')
+          echo "release_tag=$RELEASE_TAG" >> $GITHUB_OUTPUT
+          echo "Latest Release: $RELEASE_TAG"
+
+      - name: Compare with Previous Release
+        id: compare_release
+        run: |
+          # Read the release info from the downloaded artifact
+          PREVIOUS_RELEASE=$(cat easyinstaller-info 2> /dev/null || echo "NONE")
+          echo "Previous Release: $PREVIOUS_RELEASE"
+
+          # Compare the fetched release tag with the previous release tag
+          if [ "${{ steps.get_release.outputs.RELEASE_TAG }}" != "$PREVIOUS_RELEASE" ]; then
+            echo "release_changed=true" >> $GITHUB_OUTPUT
+            echo "Release Changed: true"
+          else
+            echo "release_changed=false" >> $GITHUB_OUTPUT
+            echo "Release Changed: false"
+          fi
