@@ -1,6 +1,7 @@
 name: Check SideQuest EasyInstaller Releases
 
 on:
+  push:
   schedule:
     - cron: 0 0 * * *
   workflow_dispatch:
@@ -14,7 +15,7 @@ jobs:
         uses: dawidd6/action-download-artifact@v2
         with:
           name: easyinstaller-release-info
-          workflow_conclusion:
+          workflow_conclusion: ''
           workflow: publish.yml
           if_no_artifact_found: warn
 
