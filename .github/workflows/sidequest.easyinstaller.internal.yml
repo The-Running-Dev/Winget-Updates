@@ -19,21 +19,11 @@ jobs:
       - name: Get Latest Release
         shell: pwsh
         run: |
-          $owner = 'SideQuestVR'
-          $repository = 'EasyInstallerReleases'
           $packageId = 'SideQuestVR.SideQuestEasyInstaller'
           $installerRegEx = 'SideQuest-Setup-.*-x64-win.exe$'
-          $gitHubUsername = 'The-Running-Dev'
 
           # Install needed modules
           Install-Module Microsoft.WinGet.Client -Force
-          Install-Module PowerShellForGitHub -Force
-
-          # Setup the GitHub module, disable telemetry and set authentication
-          Set-GitHubConfiguration -DisableTelemetry
-          $secureString = ('${{secrets.PublicAccessToken}}' | ConvertTo-SecureString -AsPlainText -Force)
-          $credentials = New-Object System.Management.Automation.PSCredential $gitHubUsername, $secureString
-          Set-GitHubAuthentication -Credential $credentials
 
           # Get the current WinGet version of the package
           $winGetVersion = Find-WinGetPackage -Id $packageId | `
