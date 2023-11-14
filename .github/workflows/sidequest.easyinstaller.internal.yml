@@ -5,7 +5,7 @@ on:
     types: [published]
 
 jobs:
-  update-release:
+  publish-to-winget:
     runs-on: windows-latest
     steps:
       - name: Install WinGet
@@ -50,10 +50,8 @@ jobs:
             Select -ExpandProperty browser_download_url
 
           # Call WinGetCreate to update the version and URL of the package
-          Write-Output "
           & wingetcreate update $packageId `
             --urls '$downloadUrl' '$downloadUrl' `
             --version $latestVersion `
             --submit `
             --token '${{secrets.PublicAccessToken}}'
-          "
