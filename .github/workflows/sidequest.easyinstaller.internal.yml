@@ -1,4 +1,4 @@
-name: SideQuest.EasyInstaller
+name: SideQuest.EasyInstaller.Internal
 
 on:
   release:
