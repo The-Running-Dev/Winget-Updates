@@ -10,16 +10,20 @@ jobs:
   update-release:
     runs-on: windows-latest
     steps:
+      - name: Install Winget
+        uses: Cyberboss/install-winget@v1
+        with:
+          GITHUB_TOKEN: ${{ secrets.PublicToken }}
+
+      - name: Install wingetcreate
+        run: winget install wingetcreate --disable-interactivity --accept-source-agreements
+
       - name: Get Latest Release
         shell: pwsh
         run: |
           $owner = 'SideQuestVR'
           $repository = 'EasyInstallerReleases'
           $packageId = 'SideQuestVR.SideQuestEasyInstaller'
-          $wingetCreateUrl = 'https://aka.ms/wingetcreate/latest'
-
-          Import-Module Appx -Force
-          Add-AppxPackage https://github.com/microsoft/winget-cli/releases/latest/download/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle
 
           Install-Module Microsoft.WinGet.Client -Force
           Install-Module PowerShellForGitHub -Force
@@ -43,9 +47,7 @@ jobs:
             Where-Object name -Match 'SideQuest-Setup-.*-x64-win.exe$' | `
             Select-Object -ExpandProperty browser_download_url
 
-          Invoke-WebRequest $wingetCreateUrl -OutFile wingetcreate.exe
-
-          .\wingetcreate.exe update $packageId `
+          & wingetcreate update $packageId `
             --urls '$downloadUrl' '$downloadUrl' `
             --version $version `
             --submit `
