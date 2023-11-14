@@ -52,8 +52,9 @@ jobs:
             Write-Warning "Package Does Not Exist on WinGet...Exiting"
             return
           }
+
           # Latest version and WinGet version are the same...
-          else if ($latestVersion -eq $winGetVersion) {
+          if ($latestVersion -eq $winGetVersion) {
               Write-Warning "Latest Version ($latestVersion) == WinGet Version ($winGetVersion)...Exiting"
               return
           }
