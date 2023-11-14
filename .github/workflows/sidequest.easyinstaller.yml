@@ -1,7 +1,6 @@
 name: SideQuest.EasyInstaller
 
 on:
-  push:
   schedule:
     - cron: 0 0 * * *
   workflow_dispatch:
@@ -48,10 +47,15 @@ jobs:
               -Latest
           $latestVersion = $release.tag_name -replace 'v', ''
 
-          # Latest version and WinGet version are the same...
-          if ($latestVersion -eq $winGetVersion) {
-            Write-Host "Released Version ($latestVersion) == WinGet Version ($winGetVersion)...Exiting"
+          # WinGet version does not exist...
+          if (-not $winGetVersion) {
+            Write-Warning "Package Does Not Exist on WinGet...Exiting"
             return
+          }
+          # Latest version and WinGet version are the same...
+          else if ($latestVersion -eq $winGetVersion) {
+              Write-Warning "Latest Version ($latestVersion) == WinGet Version ($winGetVersion)...Exiting"
+              return
           }
 
           # Get the installer download URL
@@ -62,6 +66,6 @@ jobs:
           # Call WinGetCreate to update the version and URL of the package
           & wingetcreate update $packageId `
             --urls '$downloadUrl' '$downloadUrl' `
-            --version $version `
+            --version $latestVersion `
             --submit `
             --token '${{secrets.PublicAccessToken}}'

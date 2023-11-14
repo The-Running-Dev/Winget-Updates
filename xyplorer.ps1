@@ -19,7 +19,7 @@ if ($latestVersion -eq $winGetVersion) {
 <#
 # Call WinGetCreate to update the version and URL of the package
 & wingetcreate update $packageId `
-    --version $version `
+    --version $latestVersion `
     --submit `
     --token ${{secrets.PublicToken} }
 #>

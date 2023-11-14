@@ -1,7 +1,6 @@
 name: XYplorer
 
 on:
-  push:
   schedule:
     - cron: 0 0 * * *
   workflow_dispatch:
@@ -21,6 +20,7 @@ jobs:
       - name: Get Latest Release
         shell: pwsh
         run: |
+          $packageId = 'CologneCodeCompany.XYplorer'
           $versionUrl = 'https://www.xyplorer.com/version.php'
 
           # Install needed modules
@@ -33,15 +33,19 @@ jobs:
           # Get the latest version
           $latestVersion = Invoke-WebRequest $versionUrl | Select-Object -ExpandProperty Content
 
+          # WinGet version does not exist...
+          if (-not $winGetVersion) {
+            Write-Warning "Package Does Not Exist on WinGet...Exiting"
+            return
+          }
           # Latest version and WinGet version are the same...
-          if ($latestVersion -eq $winGetVersion) {
-              Write-Host "Released Version ($latestVersion) == WinGet Version ($winGetVersion)...Exiting"
+          else if ($latestVersion -eq $winGetVersion) {
+              Write-Warning "Latest Version ($latestVersion) == WinGet Version ($winGetVersion)...Exiting"
               return
           }
 
           # Call WinGetCreate to update the version and URL of the package
           & wingetcreate update $packageId `
-            --urls '$downloadUrl' '$downloadUrl' `
-            --version $version `
+            --version $latestVersion `
             --submit `
             --token '${{secrets.PublicAccessToken}}'
