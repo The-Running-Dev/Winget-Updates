@@ -13,7 +13,7 @@ jobs:
       - name: Install Winget
         uses: Cyberboss/install-winget@v1
         with:
-          GITHUB_TOKEN: ${{ secrets.PublicToken }}
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
       - name: Install wingetcreate
         run: winget install wingetcreate --disable-interactivity --accept-source-agreements
