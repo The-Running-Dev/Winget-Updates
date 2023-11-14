@@ -1,0 +1,52 @@
+name: XYplorer.Portable
+
+on:
+  schedule:
+    - cron: 0 0 * * *
+  workflow_dispatch:
+
+jobs:
+  publish-to-winget:
+    runs-on: windows-latest
+    steps:
+      - name: Install WinGet
+        uses: Cyberboss/install-winget@v1
+        with:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+      - name: Install WinGetCreate
+        run: winget install wingetcreate --disable-interactivity --accept-source-agreements
+
+      - name: Get Latest Release
+        shell: pwsh
+        run: |
+          $packageId = 'CologneCodeCompany.XYplorerPortable'
+          $versionUrl = 'https://www.xyplorer.com/version.php'
+
+          # Install needed modules
+          Install-Module Microsoft.WinGet.Client -Force
+
+          # Get the current WinGet version of the package
+          $winGetVersion = Find-WinGetPackage -Id $packageId | `
+              Select-Object -ExpandProperty version
+
+          # Get the latest version
+          $latestVersion = Invoke-WebRequest $versionUrl | Select-Object -ExpandProperty Content
+
+          # WinGet version does not exist...
+          if (-not $winGetVersion) {
+            Write-Warning "Package Does Not Exist on WinGet...Exiting"
+            return
+          }
+
+          # Latest version and WinGet version are the same...
+          if ($latestVersion -eq $winGetVersion) {
+              Write-Warning "Latest Version ($latestVersion) == WinGet Version ($winGetVersion)...Exiting"
+              return
+          }
+
+          # Call WinGetCreate to update the version and URL of the package
+          & wingetcreate update $packageId `
+            --version $latestVersion `
+            --submit `
+            --token '${{secrets.PublicAccessToken}}'
