@@ -3,8 +3,8 @@ $repository = 'EasyInstallerReleases'
 $packageId = 'SideQuestVR.SideQuestEasyInstaller'
 $wingetCreateUrl = 'https://aka.ms/wingetcreate/latest'
 
-Install-Module Microsoft.WinGet.Client
-Install-Module PowerShellForGitHub
+Install-Module Microsoft.WinGet.Client -Force
+Install-Module PowerShellForGitHub -Force
 
 # Get the current Winget version of the package
 $wingetVersion = Find-WinGetPackage -Id $packageId | `
