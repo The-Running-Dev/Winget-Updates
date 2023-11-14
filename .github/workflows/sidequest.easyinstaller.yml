@@ -64,4 +64,4 @@ jobs:
             --urls '$downloadUrl' '$downloadUrl' `
             --version $version `
             --submit `
-            --token ${{secrets.PublicAccessToken}}
+            --token '${{secrets.PublicAccessToken}}'
