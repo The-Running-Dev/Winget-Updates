@@ -33,7 +33,7 @@ jobs:
 
           # Setup the GitHub module, disable telemetry and set authentication
           Set-GitHubConfiguration -DisableTelemetry
-          $secureString = (${{secrets.PublicToken}} | ConvertTo-SecureString -AsPlainText -Force)
+          $secureString = ('${{secrets.PublicAccessToken}}' | ConvertTo-SecureString -AsPlainText -Force)
           $credentials = New-Object System.Management.Automation.PSCredential $gitHubUsername, $secureString
           Set-GitHubAuthentication -Credential $credentials
 
@@ -64,4 +64,4 @@ jobs:
             --urls '$downloadUrl' '$downloadUrl' `
             --version $version `
             --submit `
-            --token ${{secrets.PublicToken}}
+            --token ${{secrets.PublicAccessToken}}
