@@ -33,7 +33,7 @@ jobs:
           $version = $release.tag_name -replace 'v', ''
 
           if ($version -eq $wingetVersion) {
-            Write-Host "Released Version ($version) == Winget Version ($wingetVersion)...Exiting"
+            Write-Host "Released Version \($version\) == Winget Version \($wingetVersion\)...Exiting"
             return
           }
 
