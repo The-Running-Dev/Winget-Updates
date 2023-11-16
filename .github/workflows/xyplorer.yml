@@ -34,6 +34,8 @@ jobs:
           # Get the latest version
           $latestVersion = Invoke-WebRequest $versionUrl | Select-Object -ExpandProperty Content
 
+          Write-Warning "Latest Version ($latestVersion), WinGet Version ($winGetVersion)..."
+
           # WinGet version does not exist...
           if (-not $winGetVersion) {
             Write-Warning "Package Does Not Exist on WinGet...Exiting"
@@ -47,8 +49,8 @@ jobs:
           }
 
           # Call WinGetCreate to update the version and URL of the package
-          & wingetcreate update $packageId `
-            --version $latestVersion `
-            --urls "$downloadUrl|x64|machine" `
-            --submit `
-            --token '${{secrets.PublicAccessToken}}'
+          # & wingetcreate update $packageId `
+          #  --version $latestVersion `
+          #  --urls "$downloadUrl|x64|machine" `
+          #  --submit `
+          #  --token '${{secrets.PublicAccessToken}}'
