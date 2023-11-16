@@ -22,6 +22,7 @@ jobs:
         run: |
           $packageId = 'CologneCodeCompany.XYplorer'
           $versionUrl = 'https://www.xyplorer.com/version.php'
+          $downloadUrl = 'https://www.xyplorer.com/download/xyplorer_full.zip'
 
           # Install needed modules
           Install-Module Microsoft.WinGet.Client -Force
@@ -48,5 +49,6 @@ jobs:
           # Call WinGetCreate to update the version and URL of the package
           & wingetcreate update $packageId `
             --version $latestVersion `
+            --url "$downloadUrl|x64|machine" "$downloadUrl|x86|machine" `
             --submit `
             --token '${{secrets.PublicAccessToken}}'
