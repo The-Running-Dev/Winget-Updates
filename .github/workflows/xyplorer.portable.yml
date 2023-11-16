@@ -27,7 +27,7 @@ jobs:
           Install-Module Microsoft.WinGet.Client -Force
 
           # Get the current WinGet version of the package
-          $winGetVersion = Find-WinGetPackage -Id $packageId | `
+          $winGetVersion = Find-WinGetPackage -Id $packageId -MatchOption Equals | `
               Select-Object -ExpandProperty version
 
           # Get the latest version
