@@ -81,7 +81,7 @@ jobs:
           # Call WinGetCreate to update the version and URL of the package
           & wingetcreate update $packageId `
             --version $latestVersion `
-            --urls "$downloadUrl|x64|machine|$RelativeFilePath" `
+            --urls "$downloadUrl|x64|machine" `
             --interactive `
             --submit `
-            --token "$env:PublicAccessToken"
+            --token $env:PublicAccessToken
