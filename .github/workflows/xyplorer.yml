@@ -46,7 +46,6 @@ jobs:
               return
           }
 
-          $gitHubToken = '${{secrets.PublicAccessToken}}'
           $zipFile = Join-Path . (Split-Path -Leaf $downloadUrl)
           Invoke-WebRequest $downloadUrl -out $zipFile
 
@@ -65,7 +64,7 @@ jobs:
               "--urls '$downloadUrl|x64|machine|'"
               '--interactive'
               '--submit'
-              "--token '$gitHubToken'"
+              "--token '$(PublicAccessToken)'"
           )
 
           $process = [System.Diagnostics.Process]::Start($winGetCreate)
@@ -81,5 +80,5 @@ jobs:
             --urls "$downloadUrl|x64|machine|$RelativeFilePath" `
             --interactive `
             --submit `
-            --token '${{secrets.PublicAccessToken}}'
+            --token '$(PublicAccessToken)'
           #>
