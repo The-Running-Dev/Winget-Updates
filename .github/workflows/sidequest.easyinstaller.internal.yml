@@ -17,6 +17,8 @@ jobs:
         run: winget install wingetcreate --disable-interactivity --accept-source-agreements
 
       - name: Get Latest Release
+        env:
+          PublicAccessToken: ${{secrets.PublicAccessToken}}
         shell: pwsh
         run: |
           $packageId = 'SideQuestVR.SideQuestEasyInstaller'
@@ -54,4 +56,4 @@ jobs:
             --urls '$downloadUrl' '$downloadUrl' `
             --version $latestVersion `
             --submit `
-            --token '${{secrets.PublicAccessToken}}'
+            --token "$env:PublicAccessToken"

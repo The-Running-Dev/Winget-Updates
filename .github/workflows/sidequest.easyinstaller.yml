@@ -18,6 +18,8 @@ jobs:
         run: winget install wingetcreate --disable-interactivity --accept-source-agreements
 
       - name: Get Latest Release
+        env:
+          PublicAccessToken: ${{secrets.PublicAccessToken}}
         shell: pwsh
         run: |
           $owner = 'SideQuestVR'
@@ -32,7 +34,7 @@ jobs:
 
           # Setup the GitHub module, disable telemetry and set authentication
           Set-GitHubConfiguration -DisableTelemetry
-          $secureString = ('${{secrets.PublicAccessToken}}' | ConvertTo-SecureString -AsPlainText -Force)
+          $secureString = ($env:PublicAccessToken | ConvertTo-SecureString -AsPlainText -Force)
           $credentials = New-Object System.Management.Automation.PSCredential $gitHubUsername, $secureString
           Set-GitHubAuthentication -Credential $credentials
 
@@ -69,4 +71,4 @@ jobs:
             --urls '$downloadUrl' '$downloadUrl' `
             --version $latestVersion `
             --submit `
-            --token '${{secrets.PublicAccessToken}}'
+            --token "$env:PublicAccessToken"

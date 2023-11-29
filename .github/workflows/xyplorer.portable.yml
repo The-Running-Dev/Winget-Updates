@@ -18,6 +18,8 @@ jobs:
         run: winget install wingetcreate --disable-interactivity --accept-source-agreements
 
       - name: Get Latest Release
+        env:
+          PublicAccessToken: ${{secrets.PublicAccessToken}}
         shell: pwsh
         run: |
           $packageId = 'CologneCodeCompany.XYplorerPortable'
@@ -49,4 +51,4 @@ jobs:
           & wingetcreate update $packageId `
             --version $latestVersion `
             --submit `
-            --token '${{secrets.PublicAccessToken}}'
+            --token "$env:PublicAccessToken"
