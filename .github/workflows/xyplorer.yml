@@ -70,11 +70,11 @@ jobs:
               "--token $env:PublicAccessToken"
           )
 
-          Write-Warning ($winGetCreate.Arguments | ConvertTo-Json)
+          Write-Debug ($winGetCreate.Arguments | ConvertTo-Json)
 
           $process = [System.Diagnostics.Process]::Start($winGetCreate)
 
-          Start-Sleep -s 2
+          Start-Sleep -s 10
 
           $process.StandardInput.WriteLine($RelativeFilePath)
 
