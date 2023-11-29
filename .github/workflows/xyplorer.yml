@@ -57,6 +57,7 @@ jobs:
             Where-Object Name -match '.exe' | `
             Select-Object -ExpandProperty Name
 
+          <#
           $winGetCreate = New-Object System.Diagnostics.ProcessStartInfo;
           $winGetCreate.FileName = 'wingetcreate'
           $winGetCreate.UseShellExecute = $false
@@ -75,13 +76,12 @@ jobs:
           Start-Sleep -s 10
 
           $process.StandardInput.WriteLine($RelativeFilePath)
+          #>
 
           # Call WinGetCreate to update the version and URL of the package
-          <#
           & wingetcreate update $packageId `
             --version $latestVersion `
             --urls "$downloadUrl|x64|machine|$RelativeFilePath" `
             --interactive `
             --submit `
             --token $env:PublicAccessToken'
-          #>
