@@ -63,13 +63,13 @@ jobs:
           $winGetCreate.Arguments = @(
               "update $packageId"
               "--version $latestVersion"
-              "--urls '$downloadUrl|x64|machine|'"
-              '--interactive'
-              '--submit'
+              "--urls '$downloadUrl|x64|machine'"
+              "--interactive"
+              "--submit"
               "--token '$($env:PublicAccessToken)'"
           )
 
-          Write-Warning $winGetCreate.Arguments
+          Write-Warning ($winGetCreate.Arguments | Out-Table)
 
           $process = [System.Diagnostics.Process]::Start($winGetCreate)
 
