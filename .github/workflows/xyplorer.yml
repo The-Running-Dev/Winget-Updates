@@ -56,7 +56,7 @@ jobs:
             Where-Object Name -match '.exe' | `
             Select-Object -ExpandProperty Name
 
-          Write-Warning "($env:PublicAccessToken).substring(0, 10)"
+          Write-Warning "$($env:PublicAccessToken).substring(0, 10)"
 
           $winGetCreate = New-Object System.Diagnostics.ProcessStartInfo;
           $winGetCreate.FileName = 'wingetcreate'
