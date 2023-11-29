@@ -59,7 +59,7 @@ jobs:
 
           $winGetCreate = New-Object System.Diagnostics.ProcessStartInfo;
           $winGetCreate.FileName = 'wingetcreate'
-          $winGetCreate.UseShellExecute = $true
+          $winGetCreate.UseShellExecute = $false
           $winGetCreate.RedirectStandardInput = $true
           $winGetCreate.Arguments = @(
               "update $packageId"
@@ -69,8 +69,6 @@ jobs:
               "--submit"
               "--token $env:PublicAccessToken"
           )
-
-          Write-Debug ($winGetCreate.Arguments | ConvertTo-Json)
 
           $process = [System.Diagnostics.Process]::Start($winGetCreate)
 
