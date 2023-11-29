@@ -59,7 +59,7 @@ jobs:
 
           $winGetCreate = New-Object System.Diagnostics.ProcessStartInfo;
           $winGetCreate.FileName = 'wingetcreate'
-          $winGetCreate.UseShellExecute = $false
+          $winGetCreate.UseShellExecute = $true
           $winGetCreate.RedirectStandardInput = $true
           $winGetCreate.Arguments = @(
               "update $packageId"
