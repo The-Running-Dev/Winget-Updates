@@ -16,6 +16,25 @@ if ($latestVersion -eq $winGetVersion) {
     return
 }
 
+$winGetCreate = New-Object System.Diagnostics.ProcessStartInfo;
+$winGetCreate.FileName = 'wingetcreate'
+$winGetCreate.UseShellExecute = $false
+$winGetCreate.RedirectStandardInput = $true
+$winGetCreate.Arguments = @(
+    "update $packageId"
+    "--version $latestVersion"
+    "--urls '$downloadUrl|x64|machine|'"
+    '--interactive'
+    '--submit'
+    "--token '${{secrets.PublicAccessToken}}'"
+)
+
+$process = [System.Diagnostics.Process]::Start($winGetCreate)
+
+Start-Sleep -s 2
+
+$process.StandardInput.WriteLine($RelativeFilePath)
+
 <#
 # Call WinGetCreate to update the version and URL of the package
 & wingetcreate update $packageId `
