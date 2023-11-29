@@ -5,6 +5,9 @@ on:
     - cron: 0 0 * * *
   workflow_dispatch:
 
+env:
+  PublicAccessToken: ${{secrets.PublicAccessToken}}
+
 jobs:
   publish-to-winget:
     runs-on: windows-latest
@@ -18,8 +21,6 @@ jobs:
         run: winget install wingetcreate --disable-interactivity --accept-source-agreements
 
       - name: Get Latest Release
-        env:
-          PublicAccessToken: ${{secrets.PublicAccessToken}}
         shell: pwsh
         run: |
           $packageId = 'CologneCodeCompany.XYplorer'
@@ -66,7 +67,7 @@ jobs:
               "--urls '$downloadUrl|x64|machine'"
               "--interactive"
               "--submit"
-              "--token '$($env:PublicAccessToken)'"
+              "--token $env:PublicAccessToken"
           )
 
           Write-Warning ($winGetCreate.Arguments | ConvertTo-Json)
@@ -84,5 +85,5 @@ jobs:
             --urls "$downloadUrl|x64|machine|$RelativeFilePath" `
             --interactive `
             --submit `
-            --token $($env:PublicAccessToken)'
+            --token $env:PublicAccessToken'
           #>
