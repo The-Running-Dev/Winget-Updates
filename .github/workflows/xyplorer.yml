@@ -46,6 +46,7 @@ jobs:
               return
           }
 
+          $gitHubToken = '${{secrets.PublicAccessToken}}'
           $zipFile = Join-Path . (Split-Path -Leaf $downloadUrl)
           Invoke-WebRequest $downloadUrl -out $zipFile
 
@@ -64,7 +65,7 @@ jobs:
               "--urls '$downloadUrl|x64|machine|'"
               '--interactive'
               '--submit'
-              "--token '${{secrets.PublicAccessToken}}'"
+              "--token '$gitHubToken'"
           )
 
           $process = [System.Diagnostics.Process]::Start($winGetCreate)
@@ -72,7 +73,7 @@ jobs:
           Start-Sleep -s 2
 
           $process.StandardInput.WriteLine($RelativeFilePath)
-          
+
           # Call WinGetCreate to update the version and URL of the package
           <#
           & wingetcreate update $packageId `
