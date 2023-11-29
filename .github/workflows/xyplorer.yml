@@ -84,4 +84,4 @@ jobs:
             --urls "$downloadUrl|x64|machine|$RelativeFilePath" `
             --interactive `
             --submit `
-            --token $env:PublicAccessToken'
+            --token "$env:PublicAccessToken"
