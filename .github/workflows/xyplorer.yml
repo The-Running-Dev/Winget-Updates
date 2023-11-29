@@ -46,9 +46,17 @@ jobs:
               return
           }
 
+          $zipFile = Join-Path . (Split-Path -Leaf $downloadUrl)
+          Invoke-WebRequest $downloadUrl -out $zipFile
+
+          [Reflection.Assembly]::LoadWithPartialName('System.IO.Compression.FileSystem')
+          $RelativeFilePath = [IO.Compression.ZipFile]::OpenRead($zipFile).Entries | `
+            Where-Object Name -match '.exe' | `
+            Select-Object -ExpandProperty Name
+
           # Call WinGetCreate to update the version and URL of the package
           & wingetcreate update $packageId `
             --version $latestVersion `
-            --urls "$downloadUrl|x64|machine" `
+            --urls "$downloadUrl|x64|machine|$RelativeFilePath" `
             --submit `
             --token '${{secrets.PublicAccessToken}}'
