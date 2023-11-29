@@ -56,8 +56,6 @@ jobs:
             Where-Object Name -match '.exe' | `
             Select-Object -ExpandProperty Name
 
-          Write-Warning "$($env:PublicAccessToken).substring(0, 10)"
-
           $winGetCreate = New-Object System.Diagnostics.ProcessStartInfo;
           $winGetCreate.FileName = 'wingetcreate'
           $winGetCreate.UseShellExecute = $false
@@ -70,6 +68,8 @@ jobs:
               '--submit'
               "--token '$env:PublicAccessToken'"
           )
+
+          Write-Warning $winGetCreate.Arguments
 
           $process = [System.Diagnostics.Process]::Start($winGetCreate)
 
