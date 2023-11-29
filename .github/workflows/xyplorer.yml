@@ -18,6 +18,8 @@ jobs:
         run: winget install wingetcreate --disable-interactivity --accept-source-agreements
 
       - name: Get Latest Release
+        env:
+          PublicAccessToken: ${{secrets.PublicAccessToken}}
         shell: pwsh
         run: |
           $packageId = 'CologneCodeCompany.XYplorer'
@@ -64,7 +66,7 @@ jobs:
               "--urls '$downloadUrl|x64|machine|'"
               '--interactive'
               '--submit'
-              "--token '$(PublicAccessToken)'"
+              "--token '$env:PublicAccessToken'"
           )
 
           $process = [System.Diagnostics.Process]::Start($winGetCreate)
@@ -80,5 +82,5 @@ jobs:
             --urls "$downloadUrl|x64|machine|$RelativeFilePath" `
             --interactive `
             --submit `
-            --token '$(PublicAccessToken)'
+            --token '$env:PublicAccessToken'
           #>
