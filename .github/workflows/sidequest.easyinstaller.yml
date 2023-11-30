@@ -3,9 +3,11 @@ name: SideQuest.EasyInstaller
 on:
   #schedule:
   #- cron: 0 0 * * *
-  push:
-    branches:
-      - main
+  #push:
+  #  paths:
+  #    - .github/workflows/sidequest.easyinstaller.yml
+  #  branches:
+  #    - main
   workflow_dispatch:
 
 env:
@@ -15,6 +17,9 @@ jobs:
   publish-to-winget:
     runs-on: windows-latest
     steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
       - name: Install WinGet
         uses: Cyberboss/install-winget@v1
         with:
