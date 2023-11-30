@@ -25,4 +25,4 @@ jobs:
 
       - name: Get Latest Release
         shell: pwsh
-        run: ../../sidequest.easyinstaller.ps1
+        run: ./sidequest.easyinstaller.ps1

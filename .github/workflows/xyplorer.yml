@@ -25,4 +25,4 @@ jobs:
 
       - name: Get Latest Release
         shell: pwsh
-        run: ../../xyplorer.ps1
+        run: ./xyplorer.ps1
