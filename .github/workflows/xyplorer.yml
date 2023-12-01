@@ -1,13 +1,13 @@
 name: XYplorer
 
 on:
-  #schedule:
-  #- cron: 0 0 * * *
-  #push:
-  #  paths:
-  #    - .github/workflows/xyplorer.yml
-  #  branches:
-  #    - main
+  schedule:
+  - cron: 0 0 * * *
+  push:
+    paths:
+      - .github/workflows/xyplorer.yml
+    branches:
+      - main
   workflow_dispatch:
 
 env:
