@@ -70,15 +70,15 @@ $installerUrl = Invoke-WebRequest $getInstallerUrl | Select-Object -ExpandProper
 
 # Call WinGetCreate to update the version and URL of the package
 if ($PSCmdlet.ShouldProcess("$packageId --version $latestVersion --urls '$installerUrl|x64|machine'", "wingetcreate update")) {
-    $existingPullRequestId = Get-GitHubPullRequest `
+    $existingPullRequestUrl = Get-GitHubPullRequest `
         -OwnerName $wingetRepositoryOwner `
         -RepositoryName $wingetRepositoryName `
         -State Open | `
         Where-Object title -Match $packageId | `
-        Select-Object -ExpandProperty id
+        Select-Object -ExpandProperty html_url
 
-    if ($existingPullRequestId) {
-        Write-Warning "Pull Request Already Exists...$wingetRepositoryPullRequestsUrl/$existingPullRequestId...Exiting"
+    if ($existingPullRequestUrl) {
+        Write-Warning "Pull Request Already Exists ($existingPullRequestUrl)...Exiting"
 
         return
     }

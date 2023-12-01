@@ -1,13 +1,14 @@
 name: SideQuest.EasyInstaller
 
 on:
-  #schedule:
-  #- cron: 0 0 * * *
-  #push:
-  #  paths:
-  #    - .github/workflows/sidequest.easyinstaller.yml
-  #  branches:
-  #    - main
+  schedule:
+  - cron: 0 0 * * *
+  push:
+    paths:
+      - .github/workflows/sidequest.easyinstaller.yml
+      - ./sidequest.easyinstaller.ps1
+    branches:
+      - main
   workflow_dispatch:
 
 env:
