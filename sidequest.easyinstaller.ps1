@@ -8,10 +8,15 @@ $repository = 'EasyInstallerReleases'
 $packageId = 'SideQuestVR.SideQuestEasyInstaller'
 $installerRegEx = 'SideQuest-Setup-.*-x64-win.exe$'
 
+$wingetRepositoryOwner = 'microsoft'
+$wingetRepositoryName = 'winget-pkgs'
+$wingetRepositoryPullRequestsUrl = 'https://github.com/microsoft/winget-pkgs/pull'
+
 $winGetVersion = '1.0'
 $latestVersion = '1.0'
 $whatIf = $WhatIfPreference.IsPresent
 $gitHubUsername = 'The-Running-Dev'
+
 # Use the token passed in as a paramater, or if empty, use the ENV token GitHubAccessToken
 $accessToken = @{$true = $gitHubAccessToken; $false = $env:GitHubAccessToken }["" -notmatch $gitHubAccessToken]
 
@@ -75,6 +80,19 @@ if (($latestVersion -eq $winGetVersion) -and (-not $whatIf)) {
 
 # Call WinGetCreate to update the version and URL of the package
 if ($PSCmdlet.ShouldProcess("$packageId --version $latestVersion --urls '$installerUrl $installerUrl'", "wingetcreate update")) {
+    $existingPullRequestId = Get-GitHubPullRequest `
+        -OwnerName $wingetRepositoryOwner `
+        -RepositoryName $wingetRepositoryName `
+        -State Open | `
+        Where-Object title -Match $packageId | `
+        Select-Object -ExpandProperty id
+
+    if ($existingPullRequestId) {
+        Write-Warning "Pull Request Already Exists...$wingetRepositoryPullRequestsUrl/$existingPullRequestId...Exiting"
+
+        return
+    }
+
     & wingetcreate update $packageId `
         --version $latestVersion `
         --urls "$installerUrl $installerUrl" `
