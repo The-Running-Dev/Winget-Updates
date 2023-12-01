@@ -11,7 +11,7 @@ on:
   workflow_dispatch:
 
 env:
-  GitHubAccessToken: ${{secrets.GITHUB_TOKEN}}
+  GitHubAccessToken: ${{secrets.PublicAccessToken}}
 
 jobs:
   publish-to-winget:
