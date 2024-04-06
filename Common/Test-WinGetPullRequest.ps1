@@ -1,8 +1,8 @@
 function Test-WinGetPullRequest {
     [CmdletBinding(SupportsShouldProcess = $true)]
     param(
-        [string] $owner = $script:WingetRepositoryOwner,
-        [string] $repository = $script:WingetRepositoryName,
+        [string] $owner = $global:WingetRepositoryOwner,
+        [string] $repository = $global:WingetRepositoryName,
         [string] $packageId,
         [string] $message
     )
@@ -16,7 +16,7 @@ function Test-WinGetPullRequest {
             Select-Object -ExpandProperty html_url
 
         Exit-WithWarning `
-            -Condition $existingPullRequestUrl `
+            -Condition ($null -ne $existingPullRequestUrl) `
             -Message "Pull Request Already Exists ($existingPullRequestUrl)...Exiting"
     }
 }

@@ -1,5 +1,6 @@
 $global:WingetRepositoryOwner = 'microsoft'
 $global:WingetRepositoryName = 'winget-pkgs'
+$global:gitHubUsername = 'The-Running-Dev'
 
 $existingFunctions = Get-ChildItem Function:\*
 
