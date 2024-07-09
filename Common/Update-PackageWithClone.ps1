@@ -16,8 +16,6 @@ function Update-WithYamlCreate {
         [hashtable] $parameters
     )
 
-    $parameters
-
     $updateParameters = @('-Mode 2')
     $updateParameters += '-AutoUpgrade'
     $updateParameters += '-PackageIdentifier'
@@ -76,8 +74,10 @@ function Update-WithYamlCreate {
     if ($PSCmdlet.ShouldProcess($yamlCreateScript, $updateParameters)) {
         if (Test-Path $parameters.YamlCreateRepositoryDir) {
             if (-not $parameters.SkipSubmit) {
+                $updateParameters
+
                 # Call YamlCreate to update the package
-                & $yamlCreateScript $updateParameters
+                "& $yamlCreateScript $updateParameters"
             }
             else {
                 Write-Output "$yamlCreateScript $updateParameters"
