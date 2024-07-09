@@ -27,6 +27,7 @@ function Update-WithYamlCreate {
     # Install needed modules
     Install-ModuleSafe Microsoft.WinGet.Client
     Install-ModuleSafe PowerShellForGitHub
+    Install-ModuleSafe powershell-yaml
 
     # Setup GitHub connection with the PAT token
     Set-GitHubConnection $parameters.GitHubUsername $parameters.AccessToken -WhatIf:$WhatIfPreference
