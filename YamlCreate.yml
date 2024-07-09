@@ -1,0 +1,33 @@
+# This setting allows you to set a default action for whether or not to test your manifest in windows sandbox
+    # always - Always tests manifests
+    # never - Never tests manifests
+TestManifestsInSandbox: never
+
+# This setting allows you to define a default action for whether or not to save files to the temporary folder
+    # always - Always saves files to the temporary folder
+    # never - Always removes the files from the temporary folder after script execution
+    # manual - Never downloads any files. All InstallerSha256 values must be entered manually
+SaveToTemporaryFolder: always
+
+# This setting allows you to set a default action for whether or not to submit PR's
+    # always - Always submits PR's automatically
+    # never - Never submits PR's automatically
+AutoSubmitPRs: always
+
+# This setting allows you to set a default action for when conflicting PRs are detected
+    # always - Skips checking for conflicting PRs
+    # never - Exits the script if conflicting PRs are detected
+ContinueWithExistingPRs: always
+
+# This setting allows you to set a default action for when redirected URLs are detected
+    # always - Always uses the detected destination URL
+    # never - Always uses the originally entered URL
+UseRedirectedURL: always
+
+# This setting allows you to set a default value for whether or not you have signed the Microsoft CLA
+# If this value is set to true, all automatic PR's will be marked as having the CLA signed
+SignedCLA: true
+
+# This setting allows you to skip the prompt to confirm you want to use quick update mode
+# If this value is set to true, the Quick Update Warning will be skipped
+SuppressQuickUpdateWarning: true

@@ -16,11 +16,6 @@ function Update-WithYamlCreate {
         [hashtable] $parameters
     )
 
-    $updateParameters = @('-Mode 2')
-    $updateParameters += '-AutoUpgrade'
-    $updateParameters += '-PackageIdentifier'
-    $updateParameters += "$($parameters.PackageId)"
-
     Exit-WithWarning `
         -Condition (-not $parameters.AccessToken) `
         -Message 'GitHub Access Token Not Set...Exiting'
@@ -54,9 +49,6 @@ function Update-WithYamlCreate {
         Test-WinGetPullRequest -packageId $parameters.PackageId -owner $parameters.WinGetOwner -WhatIf:$WhatIfPreference
     }
 
-    $updateParameters += '-PackageVersion'
-    $updateParameters += $latestVersion
-
     if ($PSCmdlet.ShouldProcess($parameters.YamlCreateRepositoryUrl, 'git clone')) {
         if (-not $parameters.SkipClone) {
             if (Test-Path $parameters.YamlCreateRepositoryDir) {
@@ -70,12 +62,22 @@ function Update-WithYamlCreate {
     }
 
     $yamlCreateScript = "$($parameters.YamlCreateRepositoryDir)\Tools\YamlCreate.ps1"
+    $yamlCreateParams = "-Mode 2 -AutoUpgrade -PackageIdentifier $($parameters.PackageId) -PackageVersion $latestVersion"
 
-    if ($PSCmdlet.ShouldProcess($yamlCreateScript, $updateParameters)) {
+    if ($PSCmdlet.ShouldProcess($yamlCreateScript, $yamlCreateParams)) {
         if (Test-Path $parameters.YamlCreateRepositoryDir) {
             if (-not $parameters.SkipSubmit) {
+                $settingsSource = Join-Path $(Split-Path $parameters.YamlCreateRepositoryDir -Parent) 'YamlCreate.yml'
+                $settingsDestination = Join-Path $env:LocalAppData 'YamlCreate\Settings.yaml'
+
+                Copy-Item $settingsSource $settingsDestination -Force
+
                 # Call YamlCreate to update the package
-                & $yamlCreateScript @updateParameters
+                & $yamlCreateScript `
+                    -Mode 2 `
+                    -AutoUpgrade `
+                    -PackageIdentifier $parameters.PackageId `
+                    -PackageVersion $latestVersion
             }
             else {
                 Write-Output "$yamlCreateScript $updateParameters"
