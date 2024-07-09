@@ -16,10 +16,12 @@ function Update-WithYamlCreate {
         [hashtable] $parameters
     )
 
+    $parameters
+
     $updateParameters = @('-Mode 2')
     $updateParameters += '-AutoUpgrade'
     $updateParameters += '-PackageIdentifier'
-    $updateParameters += $parameters.PackageId
+    $updateParameters += "$($parameters.PackageId)"
 
     Exit-WithWarning `
         -Condition (-not $parameters.AccessToken) `
