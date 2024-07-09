@@ -68,7 +68,7 @@ function Update-WithYamlCreate {
         if (Test-Path $parameters.YamlCreateRepositoryDir) {
             if (-not $parameters.SkipSubmit) {
                 $settingsSource = Join-Path $(Split-Path $parameters.YamlCreateRepositoryDir -Parent) 'YamlCreate.yml'
-                $settingsDestinationDir = Join-Path $env:LocalAppData 'YamlCreate'
+                $settingsDestinationDir = "$($env:LocalAppData)\YamlCreate"
 
                 New-Item -ItemType Directory Join-Path $settingsDestinationDir -Force | Out-Null
 
