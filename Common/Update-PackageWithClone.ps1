@@ -74,10 +74,8 @@ function Update-WithYamlCreate {
     if ($PSCmdlet.ShouldProcess($yamlCreateScript, $updateParameters)) {
         if (Test-Path $parameters.YamlCreateRepositoryDir) {
             if (-not $parameters.SkipSubmit) {
-                $updateParameters
-
                 # Call YamlCreate to update the package
-                "& $yamlCreateScript $updateParameters"
+                & $yamlCreateScript @updateParameters
             }
             else {
                 Write-Output "$yamlCreateScript $updateParameters"
