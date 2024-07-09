@@ -17,6 +17,7 @@ env:
 jobs:
   publish-to-winget:
     runs-on: windows-latest
+    name: Publish to WinGet
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
