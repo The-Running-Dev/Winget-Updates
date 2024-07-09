@@ -70,7 +70,7 @@ function Update-WithYamlCreate {
                 $settingsSource = Join-Path $(Split-Path $parameters.YamlCreateRepositoryDir -Parent) 'YamlCreate.yml'
                 $settingsDestinationDir = "$($env:LocalAppData)\YamlCreate"
 
-                New-Item -ItemType Directory Join-Path $settingsDestinationDir -Force | Out-Null
+                New-Item -ItemType Directory $settingsDestinationDir -Force | Out-Null
 
                 $settingsDestination = Join-Path $settingsDestinationDir 'Settings.yaml'
                 Copy-Item $settingsSource $settingsDestination -Force
