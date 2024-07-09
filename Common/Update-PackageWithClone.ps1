@@ -68,8 +68,11 @@ function Update-WithYamlCreate {
         if (Test-Path $parameters.YamlCreateRepositoryDir) {
             if (-not $parameters.SkipSubmit) {
                 $settingsSource = Join-Path $(Split-Path $parameters.YamlCreateRepositoryDir -Parent) 'YamlCreate.yml'
-                $settingsDestination = Join-Path $env:LocalAppData 'YamlCreate\Settings.yaml'
+                $settingsDestinationDir = Join-Path $env:LocalAppData 'YamlCreate'
 
+                New-Item -ItemType Directory Join-Path $settingsDestinationDir -Force | Out-Null
+
+                $settingsDestination = Join-Path $settingsDestinationDir 'Settings.yaml'
                 Copy-Item $settingsSource $settingsDestination -Force
 
                 # Call YamlCreate to update the package
