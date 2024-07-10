@@ -8,7 +8,8 @@ GetInstallerUrl     = 'https://www.xyplorer.com/version.php?installer=1'
 WinGetOwner         = $global:WingetRepositoryOwner
 WinGetRepository    = $global:WingetRepositoryName
 GitHubUsername      = $global:gitHubUsername
-AaccessToken        = $accessToken
+PublicAccessToken   = $publicAccessToken
+PrivateAccessToken  = $privateAccessToken
 #>
 function Get-WinGetPackageUpdate {
     [CmdletBinding(SupportsShouldProcess = $true)]
@@ -18,11 +19,15 @@ function Get-WinGetPackageUpdate {
 
     $updateParameters = @($parameters.PackageId)
     $updateParameters += '--token'
-    $updateParameters += $parameters.AccessToken
+    $updateParameters += $parameters.PrivateAccessToken
 
     Exit-WithWarning `
-        -Condition (-not $parameters.AccessToken) `
-        -Message 'GitHub Access Token Not Set...Exiting'
+        -Condition (-not $parameters.PublicAccessToken) `
+        -Message 'Public Access Token Not Set...Exiting'
+
+    Exit-WithWarning `
+        -Condition (-not $parameters.PrivateAccessToken) `
+        -Message 'Private Access Token Not Set...Exiting'
 
     # Install needed modules
     Install-ModuleSafe Microsoft.WinGet.Client

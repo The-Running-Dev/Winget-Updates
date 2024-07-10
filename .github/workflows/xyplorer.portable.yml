@@ -29,4 +29,7 @@ jobs:
 
       - name: Get Latest Release
         shell: pwsh
-        run: ./Scripts/xyplorer.portable.ps1
+        run: |
+          ./Scripts/xyplorer.portable.ps1 `
+            -publicAccessToken ${{secrets.PublicAccessToken}} `
+            -privateAccessToken ${{secrets.GITHUB_TOKEN}}
