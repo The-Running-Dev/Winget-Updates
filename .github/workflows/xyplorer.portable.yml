@@ -6,7 +6,7 @@ on:
   push:
     paths:
       - .github/workflows/xyplorer.portable.yml
-      - ./xyplorer.portable.ps1
+      - ./Scripts/xyplorer.portable.ps1
     branches:
       - main
   workflow_dispatch:
