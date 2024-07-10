@@ -26,7 +26,7 @@ Get-WinGetPackageUpdate @{
     WinGetRepository    = $global:WingetRepositoryName
     GitHubUsername      = $global:gitHubUsername
     AccessToken         = $accessToken
-    WingetCreateCLI     = Join-Path $winGetCreateCLIDestinationPath 'WingetCreateCLI.exe'
+    WinGetCreateCLI     = Join-Path $winGetCreateCLIDestinationPath 'WingetCreateCLI.exe'
     SkipVersionCheck    = $skipVersionCheck.IsPresent
     SkipPRCheck         = $skipPRCheck.IsPresent
     SkipSubmit          = $skipSubmit.IsPresent

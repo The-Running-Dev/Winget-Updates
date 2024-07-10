@@ -2,14 +2,17 @@ function Invoke-WinGetCreateUpdate {
     [CmdletBinding(SupportsShouldProcess = $true)]
     param(
         [Parameter()][Array] $parameters,
-        [Parameter()][String] $wingetCreateCLI,
+        [Parameter()][String] $winGetCreateCLI,
         [Parameter()][Bool] $skipSubmit
     )
 
     $cliExecutable = 'wingetcreate'
 
-    if ($wingetCreateCLI -and (Test-Path $wingetCreateCLI -ErrorAction SilentlyContinue)) {
-        $cliExecutable = $wingetCreateCLI
+    Write-Warning $winGetCreateCLI
+    Write-Warning "$(Test-Path $winGetCreateCLI)"
+
+    if ($winGetCreateCLI -and (Test-Path $winGetCreateCLI -ErrorAction SilentlyContinue)) {
+        $cliExecutable = $winGetCreateCLI
     }
 
     if ($skipSubmit) {

@@ -16,8 +16,6 @@ function Get-WinGetPackageUpdate {
         [hashtable] $parameters
     )
 
-    $parameters
-
     $updateParameters = @($parameters.PackageId)
     $updateParameters += '--token'
     $updateParameters += $parameters.AccessToken
@@ -68,7 +66,7 @@ function Get-WinGetPackageUpdate {
     # Call WinGetCreate to update the package
     Invoke-WinGetCreateUpdate `
         $updateParameters `
-        -wingetCreateCLI $parameters.WingetCreateCLI `
+        -winGetCreateCLI $parameters.WinGetCreateCLI `
         -skipSubmit $parameters.SkipSubmit `
         -WhatIf:$WhatIfPreference
 }
