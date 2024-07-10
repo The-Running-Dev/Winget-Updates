@@ -34,7 +34,7 @@ function Get-WinGetPackageUpdate {
     Install-ModuleSafe PowerShellForGitHub
 
     # Setup GitHub connection with the PAT token
-    Set-GitHubConnection $parameters.GitHubUsername $parameters.AccessToken -WhatIf:$WhatIfPreference
+    Set-GitHubConnection $parameters.GitHubUsername $parameters.PublicAccessToken -WhatIf:$WhatIfPreference
 
     # Get the current WinGet version of the package
     $winGetVersion = Get-WinGetVersion $parameters.PackageId -WhatIf:$WhatIfPreference
