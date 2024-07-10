@@ -10,14 +10,13 @@ $baseDir = Split-Path $PSScriptRoot -Parent
 
 Import-Module (Join-Path $baseDir 'Common\Common.psm1') -Force
 
-Install-Module 7Zip4PowerShell
-
 # Use the token passed in as a paramater, or if empty, use the ENV token GitHubAccessToken
 $accessToken = @{$true = $gitHubAccessToken; $false = $env:GitHubAccessToken }["" -notmatch $gitHubAccessToken]
 
 $winGetCreateCLISourcePath = Join-Path $baseDir 'Tools\WingetCreateCLI.7z'
 $winGetCreateCLIDestinationDir = Join-Path $baseDir 'Tools'
 
+Install-Module 7Zip4PowerShell -Force
 Expand-7Zip -ArchiveFileName $winGetCreateCLISourcePath -TargetPath $winGetCreateCLIDestinationDir
 
 Get-WinGetPackageUpdate @{
