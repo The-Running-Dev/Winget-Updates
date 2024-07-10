@@ -8,11 +8,10 @@ function Invoke-WinGetCreateUpdate {
 
     $cliExecutable = 'wingetcreate'
 
-    Write-Warning $winGetCreateCLI
-    Write-Warning "$(Test-Path $winGetCreateCLI)"
-
     if ($winGetCreateCLI -and (Test-Path $winGetCreateCLI -ErrorAction SilentlyContinue)) {
         $cliExecutable = $winGetCreateCLI
+
+        Write-Warning "Using Custom WinGetCreate...$winGetCreateCLI"
     }
 
     if ($skipSubmit) {
@@ -22,7 +21,7 @@ function Invoke-WinGetCreateUpdate {
     }
     else {
         if ($PSCmdlet.ShouldProcess("$($parameters.Id) --version $($parameters.Version) --urls '$($parameters.Urls)'", "wingetcreate update")) {
-            "& $cliExecutable update $parameters"
+            & $cliExecutable update $parameters
         }
     }
 }
