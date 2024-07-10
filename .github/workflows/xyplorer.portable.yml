@@ -32,4 +32,4 @@ jobs:
 
       - name: Get Latest Release
         shell: pwsh
-        run: ./xyplorer.portable.ps1
+        run: ./Scripts/xyplorer.portable.ps1
