@@ -27,9 +27,6 @@ jobs:
         with:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
-      - name: Install WinGetCreate
-        run: winget install wingetcreate --disable-interactivity --accept-source-agreements
-
       - name: Get Latest Release
         shell: pwsh
         run: ./Scripts/xyplorer.portable.ps1

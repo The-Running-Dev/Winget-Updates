@@ -66,6 +66,7 @@ function Get-WinGetPackageUpdate {
     # Call WinGetCreate to update the package
     Invoke-WinGetCreateUpdate `
         $updateParameters `
+        -wingetCreateCLI $parameters.WingetCreateCLI `
         -skipSubmit $parameters.SkipSubmit `
         -WhatIf:$WhatIfPreference
 }

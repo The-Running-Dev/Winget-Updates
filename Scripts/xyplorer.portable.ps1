@@ -9,24 +9,15 @@ Param(
 $baseDir = Split-Path $PSScriptRoot -Parent
 
 Import-Module (Join-Path $baseDir 'Common\Common.psm1') -Force
+Install-ModuleSafe 7Zip4PowerShell
 
 # Use the token passed in as a paramater, or if empty, use the ENV token GitHubAccessToken
 $accessToken = @{$true = $gitHubAccessToken; $false = $env:GitHubAccessToken }["" -notmatch $gitHubAccessToken]
 
-# Replace the WingetCreateCore file with the local patched one
-$winGetCreateCoreDll = 'WingetCreateCore.dll'
-$winGetCreateCoreDllSourcePath = Join-Path $baseDir "Tools\$winGetCreateCoreDll"
+$winGetCreateCLISourcePath = Join-Path $baseDir 'Tools\WingetCreateCLI.7z'
+$winGetCreateCLIDestinationPath = Join-Path $baseDir 'Tools\WingetCreateCLI'
 
-$winGetCreateDir = Get-ChildItem 'C:\Program Files\WindowsApps' -Recurse 'WingetCreateCore.dll' | `
-    Sort-Object -Descending | `
-    Select-Object -First 1 -ExpandProperty Directory | `
-    Select-Object -ExpandProperty FullName
-
-if (Test-Path $winGetCreateDir) {
-    $winGetCreateCoreDllDestinationPath = Join-Path $winGetCreateDir $winGetCreateCoreDll
-    
-    Copy-ProtectedFile $winGetCreateCoreDllSourcePath $winGetCreateCoreDllDestinationPath
-}
+Expand-7Zip -ArchiveFileName $winGetCreateCLISourcePath -TargetPath $winGetCreateCLIDestinationPath
 
 Get-WinGetPackageUpdate @{
     PackageId           = 'CologneCodeCompany.XYplorerPortable'
@@ -35,6 +26,7 @@ Get-WinGetPackageUpdate @{
     WinGetRepository    = $global:WingetRepositoryName
     GitHubUsername      = $global:gitHubUsername
     AccessToken         = $accessToken
+    WingetCreateCLI     = Join-Path $winGetCreateCLIDestinationPath 'WingetCreateCLI.exe'
     SkipVersionCheck    = $skipVersionCheck.IsPresent
     SkipPRCheck         = $skipPRCheck.IsPresent
     SkipSubmit          = $skipSubmit.IsPresent
