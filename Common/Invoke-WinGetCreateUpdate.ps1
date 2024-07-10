@@ -6,7 +6,7 @@ function Invoke-WinGetCreateUpdate {
         [Parameter()][Bool] $skipSubmit
     )
 
-    $parameters
+    $parameters | Format-Table
 
     $cliExecutable = 'wingetcreate'
 
