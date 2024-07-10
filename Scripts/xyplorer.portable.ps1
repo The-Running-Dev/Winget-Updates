@@ -15,6 +15,7 @@ $accessToken = @{$true = $gitHubAccessToken; $false = $env:GitHubAccessToken }["
 
 $winGetCreateCLISourcePath = Join-Path $baseDir 'Tools\WingetCreateCLI.7z'
 $winGetCreateCLIDestinationDir = Join-Path $baseDir 'Tools'
+$winGetCreateCLI = Join-Path $winGetCreateCLIDestinationDir 'WingetCreateCLI\WingetCreateCLI.exe'
 
 Install-Module 7Zip4PowerShell -Force
 Expand-7Zip -ArchiveFileName $winGetCreateCLISourcePath -TargetPath $winGetCreateCLIDestinationDir
@@ -26,7 +27,7 @@ Get-WinGetPackageUpdate @{
     WinGetRepository    = $global:WingetRepositoryName
     GitHubUsername      = $global:gitHubUsername
     AccessToken         = $accessToken
-    WinGetCreateCLI     = Join-Path $winGetCreateCLIDestinationDir 'WingetCreateCLI.exe'
+    WinGetCreateCLI     = $winGetCreateCLI
     SkipVersionCheck    = $skipVersionCheck.IsPresent
     SkipPRCheck         = $skipPRCheck.IsPresent
     SkipSubmit          = $skipSubmit.IsPresent
