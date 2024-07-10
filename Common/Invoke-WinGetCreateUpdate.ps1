@@ -6,6 +6,8 @@ function Invoke-WinGetCreateUpdate {
         [Parameter()][Bool] $skipSubmit
     )
 
+    $parameters
+
     $cliExecutable = 'wingetcreate'
 
     if ($winGetCreateCLI -and (Test-Path $winGetCreateCLI -ErrorAction SilentlyContinue)) {
