@@ -19,7 +19,7 @@ function Invoke-WinGetCreateUpdate {
     }
     else {
         if ($PSCmdlet.ShouldProcess("$($parameters.Id) --version $($parameters.Version) --urls '$($parameters.Urls)'", "wingetcreate update")) {
-            & $cliExecutable update $parameters
+            "& $cliExecutable update $parameters"
         }
     }
 }

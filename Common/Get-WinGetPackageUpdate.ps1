@@ -16,6 +16,8 @@ function Get-WinGetPackageUpdate {
         [hashtable] $parameters
     )
 
+    $parameters
+
     $updateParameters = @($parameters.PackageId)
     $updateParameters += '--token'
     $updateParameters += $parameters.AccessToken
