@@ -14,7 +14,8 @@ Import-Module (Join-Path $baseDir 'Common\Common.psm1') -Force
 $accessToken = @{$true = $gitHubAccessToken; $false = $env:GitHubAccessToken }["" -notmatch $gitHubAccessToken]
 
 # Replace the WingetCreateCore file with the local patched one
-$winGetCreateCoreDll = Join-Path $baseDir 'Tools\WingetCreateCore.dll'
+$winGetCreateCoreDll = 'WingetCreateCore.dll'
+$winGetCreateCoreDllSourcePath = Join-Path $baseDir "Tools\$winGetCreateCoreDll"
 
 $winGetCreateDir = Get-ChildItem 'C:\Program Files\WindowsApps' -Recurse 'WingetCreateCore.dll' | `
     Sort-Object -Descending | `
@@ -22,7 +23,9 @@ $winGetCreateDir = Get-ChildItem 'C:\Program Files\WindowsApps' -Recurse 'Winget
     Select-Object -ExpandProperty FullName
 
 if (Test-Path $winGetCreateDir) {
-    Copy-Item $winGetCreateCoreDll $winGetCreateDir -Force
+    $winGetCreateCoreDllDestinationPath = Join-Path $winGetCreateDir $winGetCreateCoreDll
+    
+    Copy-ProtectedFile $winGetCreateCoreDllSourcePath $winGetCreateCoreDllDestinationPath
 }
 
 Get-WinGetPackageUpdate @{
