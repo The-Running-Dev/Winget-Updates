@@ -15,7 +15,7 @@ Install-ModuleSafe 7Zip4PowerShell
 $accessToken = @{$true = $gitHubAccessToken; $false = $env:GitHubAccessToken }["" -notmatch $gitHubAccessToken]
 
 $winGetCreateCLISourcePath = Join-Path $baseDir 'Tools\WingetCreateCLI.7z'
-$winGetCreateCLIDestinationPath = Join-Path $baseDir 'Tools\WingetCreateCLI'
+$winGetCreateCLIDestinationPath = Join-Path $baseDir 'Tools'
 
 Expand-7Zip -ArchiveFileName $winGetCreateCLISourcePath -TargetPath $winGetCreateCLIDestinationPath
 
