@@ -1,6 +1,6 @@
 [CmdletBinding(SupportsShouldProcess = $true)]
 Param(
-    [Parameter()][string] $accessToken,
+    [Parameter()][string] $gitHubAccessToken,
     [Parameter()][switch] $skipVersionCheck,
     [Parameter()][switch] $skipPRCheck,
     [Parameter()][switch] $skipSubmit
@@ -11,7 +11,7 @@ $baseDir = Split-Path $PSScriptRoot -Parent
 Import-Module (Join-Path $baseDir 'Common\Common.psm1') -Force
 
 # Use the public token passed in as a paramater, or if empty, use the ENV token GitHubAccessToken
-$accessToken = @{$true = $accessToken; $false = $env:GitHubAccessToken }["" -notmatch $accessToken]
+$accessToken = @{$true = $gitHubAccessToken; $false = $env:GitHubAccessToken }["" -notmatch $gitHubAccessToken]
 
 $winGetCreateCLISourcePath = Join-Path $baseDir 'Tools\WinGetCreateCLI.7z'
 $winGetCreateCLIDestinationDir = Join-Path $baseDir 'Tools'
