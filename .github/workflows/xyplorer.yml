@@ -31,6 +31,6 @@ jobs:
       - name: Get Latest Release
         shell: pwsh
         run: |
-          ./Scripts/xyplorer.portable.ps1 `
+          ./Scripts/xyplorer.ps1 `
             -gitHubAccessToken ${{secrets.AccessToken}} `
             -skipSubmit
