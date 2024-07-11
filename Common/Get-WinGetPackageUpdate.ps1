@@ -67,6 +67,5 @@ function Get-WinGetPackageUpdate {
     Invoke-WinGetCreateUpdate `
         $updateParameters `
         -winGetCreateCLI $parameters.WinGetCreateCLI `
-        -skipSubmit $parameters.SkipSubmit `
         -WhatIf:$WhatIfPreference
 }
