@@ -12,7 +12,7 @@ function Test-WinGetPullRequest {
             -OwnerName $owner `
             -RepositoryName $repository `
             -State Open | `
-            Where-Object title -Match $packageId | `
+            Where-Object title -Match "$packageId\b" | `
             Select-Object -ExpandProperty html_url
 
         Exit-WithWarning `
