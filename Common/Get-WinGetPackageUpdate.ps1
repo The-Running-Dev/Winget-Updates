@@ -19,7 +19,7 @@ function Get-WinGetPackageUpdate {
 
     $updateParameters = @($parameters.PackageId)
     $updateParameters += '--token'
-    $updateParameters += $parameters.PublicAccessToken
+    $updateParameters += $parameters.PrivateAccessToken
 
     Exit-WithWarning `
         -Condition (-not $parameters.PublicAccessToken) `

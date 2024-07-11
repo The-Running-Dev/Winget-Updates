@@ -21,7 +21,7 @@ $winGetCreateCLISourcePath = Join-Path $baseDir 'Tools\WinGetCreateCLI.7z'
 $winGetCreateCLIDestinationDir = Join-Path $baseDir 'Tools'
 $winGetCreateCLI = Join-Path $winGetCreateCLIDestinationDir 'WinGetCreateCLI\WingetCreateCLI.exe'
 
-Install-Module 7Zip4PowerShell -Force
+Install-ModuleSafe 7Zip4PowerShell
 Expand-7Zip -ArchiveFileName $winGetCreateCLISourcePath -TargetPath $winGetCreateCLIDestinationDir
 
 Get-WinGetPackageUpdate @{

@@ -11,9 +11,6 @@ on:
       - main
   workflow_dispatch:
 
-env:
-  GitHubAccessToken: ${{secrets.PublicAccessToken}}
-
 jobs:
   publish-to-winget:
     name: Publish to WinGet
