@@ -2,14 +2,13 @@
 ========================================================
 Example Parameters
 ========================================================
-PackageId           = 'CologneCodeCompany.XYplorer'
-VersionUrl          = 'https://www.xyplorer.com/version.php'
-GetInstallerUrl     = 'https://www.xyplorer.com/version.php?installer=1'
-WinGetOwner         = $global:WingetRepositoryOwner
-WinGetRepository    = $global:WingetRepositoryName
-GitHubUsername      = $global:gitHubUsername
-PublicAccessToken   = $publicAccessToken
-PrivateAccessToken  = $privateAccessToken
+PackageId               = 'CologneCodeCompany.XYplorer'
+VersionUrl              = 'https://www.xyplorer.com/version.php'
+GetInstallerUrl         = 'https://www.xyplorer.com/version.php?installer=1'
+WinGetOwner             = $global:WingetRepositoryOwner
+WinGetRepository        = $global:WingetRepositoryName
+GitHubUsername          = $global:gitHubUsername
+AccessToken             = $accessToken
 #>
 function Get-WinGetPackageUpdate {
     [CmdletBinding(SupportsShouldProcess = $true)]
@@ -17,24 +16,20 @@ function Get-WinGetPackageUpdate {
         [hashtable] $parameters
     )
 
+    Exit-WithWarning `
+        -Condition (-not $parameters.AccessToken) `
+        -Message 'Access Token Not Set...Exiting'
+
     $updateParameters = @($parameters.PackageId)
     $updateParameters += '--token'
-    $updateParameters += $parameters.PrivateAccessToken
-
-    Exit-WithWarning `
-        -Condition (-not $parameters.PublicAccessToken) `
-        -Message 'Public Access Token Not Set...Exiting'
-
-    Exit-WithWarning `
-        -Condition (-not $parameters.PrivateAccessToken) `
-        -Message 'Private Access Token Not Set...Exiting'
+    $updateParameters += $parameters.AccessToken
 
     # Install needed modules
     Install-ModuleSafe Microsoft.WinGet.Client
     Install-ModuleSafe PowerShellForGitHub
 
     # Setup GitHub connection with the PAT token
-    Set-GitHubConnection $parameters.GitHubUsername $parameters.PrivateAccessToken -WhatIf:$WhatIfPreference
+    Set-GitHubConnection $parameters.GitHubUsername $parameters.AccessToken -WhatIf:$WhatIfPreference
 
     # Get the current WinGet version of the package
     $winGetVersion = Get-WinGetVersion $parameters.PackageId -WhatIf:$WhatIfPreference
