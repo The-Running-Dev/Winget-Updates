@@ -6,13 +6,11 @@ on:
   push:
     paths:
       - .github/workflows/xyplorer.yml
-      - ./xyplorer.ps1
+      - ./Scripts/xyplorer.ps1
+      - ./Common
     branches:
       - main
   workflow_dispatch:
-
-env:
-  GitHubAccessToken: ${{secrets.PublicAccessToken}}
 
 jobs:
   publish-to-winget:
@@ -32,4 +30,7 @@ jobs:
 
       - name: Get Latest Release
         shell: pwsh
-        run: ./xyplorer.ps1
+        run: |
+          ./Scripts/xyplorer.portable.ps1 `
+            -gitHubAccessToken ${{secrets.AccessToken}} `
+            -skipSubmit

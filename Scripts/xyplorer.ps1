@@ -6,7 +6,9 @@ Param(
     [Parameter()][switch] $skipSubmit
 )
 
-Import-Module (Join-Path $PSScriptRoot 'Common\Common.psm1') -Force
+$baseDir = Split-Path $PSScriptRoot -Parent
+
+Import-Module (Join-Path $baseDir 'Common\Common.psm1') -Force
 
 # Use the token passed in as a paramater, or if empty, use the ENV token GitHubAccessToken
 $accessToken = @{$true = $gitHubAccessToken; $false = $env:GitHubAccessToken }["" -notmatch $gitHubAccessToken]
