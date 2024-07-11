@@ -6,8 +6,8 @@ on:
   push:
     paths:
       - .github/workflows/xyplorer.yml
-      - ./Scripts/xyplorer.ps1
-      - ./Common
+      - Scripts/xyplorer.ps1
+      - Common/**
     branches:
       - main
   workflow_dispatch:
@@ -32,6 +32,4 @@ jobs:
         shell: pwsh
         run: |
           ./Scripts/xyplorer.ps1 `
-            -gitHubAccessToken ${{secrets.AccessToken}} `
-            -skipPRCheck `
-            -skipSubmit
+            -gitHubAccessToken ${{secrets.AccessToken}}
