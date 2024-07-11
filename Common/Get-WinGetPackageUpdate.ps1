@@ -53,7 +53,7 @@ function Get-WinGetPackageUpdate {
         $installerUrl = Get-ContentFromUrl $parameters.GetInstallerUrl -WhatIf:$WhatIfPreference
 
         $updateParameters += '--urls'
-        $updateParameters += "'$($installerUrl)|x64|machine'"
+        $updateParameters += "$($installerUrl)|x64|machine"
     }
 
     $updateParameters += '--version'
