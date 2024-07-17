@@ -46,7 +46,12 @@ function Get-WinGetPackageUpdate {
 
     if (-not $parameters.SkipPRCheck) {
         # Check for existing pull request for this package
-        Test-WinGetPullRequest -packageId $parameters.PackageId -owner $parameters.WinGetOwner -WhatIf:$WhatIfPreference
+        Test-WinGetPullRequest `
+            -packageId $parameters.PackageId `
+            -version $latestVersion `
+            -owner $parameters.WinGetOwner `
+            -repository $parameters.WinGetRepository `
+            -WhatIf:$WhatIfPreference
     }
 
     if ($parameters.GetInstallerUrl) {

@@ -1,9 +1,10 @@
 function Test-WinGetPullRequest {
     [CmdletBinding(SupportsShouldProcess = $true)]
     param(
+        [string] $packageId,
+        [string] $version,
         [string] $owner = $global:WingetRepositoryOwner,
         [string] $repository = $global:WingetRepositoryName,
-        [string] $packageId,
         [string] $message
     )
 
@@ -12,7 +13,7 @@ function Test-WinGetPullRequest {
             -OwnerName $owner `
             -RepositoryName $repository `
             -State Open | `
-            Where-Object title -Match "$packageId\b" | `
+            Where-Object title -Match "$packageId\b version $version" | `
             Select-Object -ExpandProperty html_url
 
         Exit-WithWarning `
